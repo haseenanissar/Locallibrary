@@ -17,7 +17,7 @@ def index(request):
     # The 'all()' is implied by default.
     num_authors = Author.objects.count()
     num_genres = Genre.objects.count()
-    num_searchbook = Book.objects.filter(title="war").count()
+    num_searchbook = Book.objects.filter(title__icontains="Harry").count()
 
     context = {
         'num_books': num_books,
@@ -33,6 +33,14 @@ def index(request):
     
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 2
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 2
 
 class BookDetailView(generic.DetailView):
     model = Book
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
